@@ -200,10 +200,10 @@ public class NacosNamingService implements NamingService {
             beatInfo.setScheduled(false);
             long instanceInterval = instance.getInstanceHeartBeatInterval();
             beatInfo.setPeriod(instanceInterval == 0 ? DEFAULT_HEART_BEAT_INTERVAL : instanceInterval);
-
+            // 添加心跳任务，5s后向注册中心发送心跳
             beatReactor.addBeatInfo(NamingUtils.getGroupedName(serviceName, groupName), beatInfo);
         }
-
+        // 向注册中心注册服务
         serverProxy.registerService(NamingUtils.getGroupedName(serviceName, groupName), groupName, instance);
     }
 

@@ -95,6 +95,7 @@ public class BeatReactor {
             if (beatInfo.isStopped()) {
                 return;
             }
+            // 每5s向注册中心发送心跳信息
             long result = serverProxy.sendBeat(beatInfo);
             long nextTime = result > 0 ? result : beatInfo.getPeriod();
             executorService.schedule(new BeatTask(beatInfo), nextTime, TimeUnit.MILLISECONDS);
